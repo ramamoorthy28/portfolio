@@ -7,12 +7,12 @@ export default function Projects() {
         projects : [
         {
             image: WebsiteImg1,
-            description: "An eCommerce platform designed to provide a seamless shopping experience. Built using the powerful MERN stack (MongoDB, Express, React, Node.js) for scalability and performance.",
+            description: "An eCommerce platform built with the MERN stack, offering a smooth shopping experience with scalability and performance.",
             link: "https://github.com/ramamoorthy28/Projects"
         },
         {
             image: WebsiteImg2,
-            description: "A food delivery platform offering users a seamless way to order meals from local restaurants. Built to provide fast, reliable, and user-friendly service, similar to Swiggy.",
+            description: "A food delivery platform offering a seamless, fast, and user-friendly way to order meals from local restaurants, similar to Swiggy.",
             link: "https//github.com/ram/ram_Food"
         },
         {
