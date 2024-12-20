@@ -2,7 +2,7 @@ import ResumeImg from "../assets/resume.jpg"
 
 export default function Resume() {
 const config = {
-    link: "https://drive.google.com/file/d/1g-NH8sKnbX9ywwELJQrvEYj1JDzuKtSh/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1g-NH8sKnbX9ywwELJQrvEYj1JDzuKtSh/view?usp=sharing"
 }
 
     return <section className="flex flex-col md:flex-row bg-secondary px-5 " id="resume">
