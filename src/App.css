@@ -2,36 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base Styles */
 header ul li {
     @apply px-3;
-
 }
 
 .bg-primary {
-    background:linear-gradient(to bottom, #2B2B2B, #003366);
+    background: linear-gradient(to bottom, #2B2B2B, #003366);
 }
 
 .bg-secondary {
     background: linear-gradient(to bottom, #2B2B2B, #003366);
 }
 
-.mobile-nav{
+.mobile-nav {
     @apply fixed top-10 left-0 bg-gray-800 w-full h-1/5;
-
 }
 
 .mobile-nav li {
     @apply w-full h-full text-center border-b-2;
 }
 
-.project-desc {
-    @apply absolute left-0 right-0 bottom-0 top-0 bg-secondary opacity-0 duration-500 hover:opacity-100;
-}
-
-.button {
-    @apply bg-primary px-5 py-2 font-bold hover:border-2 border-white rounded;
-}
-
 html {
     scroll-behavior: smooth;
+}
+
+/* Project Card Styles */
+.project-card {
+    @apply relative h-[300px] w-full rounded-lg overflow-hidden;
+    perspective: 1000px;
+}
+
+.project-card-inner {
+    @apply relative w-full h-full;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.project-card:hover .project-card-inner {
+    transform: rotateY(180deg);
+}
+
+.project-card.active .project-card-inner {
+    transform: rotateY(180deg);
+}
+
+.project-card-front, 
+.project-card-back {
+    @apply absolute inset-0 w-full h-full;
+    backface-visibility: hidden;
+}
+
+.project-card-front {
+    @apply z-10;
+}
+
+.project-card-back {
+    @apply bg-secondary p-5 flex flex-col;
+    transform: rotateY(180deg);
+}
+
+/* Button Styles */
+.project-button {
+    @apply px-4 py-2 rounded transition-colors text-center font-medium;
+}
+
+.view-code-btn {
+    @apply bg-blue-600 hover:bg-blue-700 text-white;
+}
+
+.view-details-btn {
+    @apply bg-green-600 hover:bg-green-700 text-white;
+}
+
+/* Technology Tags */
+.tech-tag {
+    @apply bg-gray-800 px-2 py-1 rounded text-sm;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .project-card {
+        height: 280px;
+    }
+    
+    .project-buttons {
+        @apply flex flex-col gap-2;
+    }
+}
+
+/* Animation for touch devices */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.touch .project-card-back {
+    animation: fadeIn 0.3s ease-out;
 }

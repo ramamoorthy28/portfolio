@@ -1,9 +1,17 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import WebsiteImg1 from '../assets/ecommerce-websites.jpg';
 import WebsiteImg2 from '../assets/food-ecommerce.jpg';
 import WebsiteImg3 from '../assets/website-blog.jpg';
-import { Link } from 'react-router-dom';
 
 export default function Projects() {
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+    
+    // Detect touch devices
+    useState(() => {
+        setIsTouchDevice('ontouchstart' in window);
+    }, []);
+
     const config = {
         projects: [
             {
@@ -33,50 +41,64 @@ export default function Projects() {
         ]
     };
 
+    const handleCardClick = (e) => {
+        if (isTouchDevice) {
+            e.currentTarget.classList.toggle('active');
+        }
+    };
+
     return (
-        <section className="flex flex-col py-20 px-5 justify-center bg-primary text-white" id="projects">
+        <section className={`flex flex-col py-20 px-5 justify-center bg-primary text-white ${isTouchDevice ? 'touch' : ''}`} id="projects">
             <div className="w-full">
-                <div className="flex flex-col px-10 py-5">
+                <div className="flex flex-col px-4 md:px-10 py-5">
                     <h1 className="text-4xl border-b-4 border-secondary mb-5 w-[150px] font-bold">Projects</h1>
                     <p>These are some of my best Projects. I have built these with React, Flutter, MERN and more. Check them out.</p>
                 </div>
             </div>
-            <div className="w-full">
-                <div className='flex flex-col md:flex-row px-10 gap-5'>
+            <div className="w-full px-4 md:px-10">
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
                     {config.projects.map((project, index) => (
-                        <div className='relative group' key={index}>
-                            <img 
-                                className='h-[200px] w-[500px] object-cover rounded-t-lg' 
-                                src={project.image} 
-                                alt={project.title || "Project screenshot"}
-                            />
-                            <div className='project-desc bg-secondary p-5 rounded-b-lg'>
-                                <h3 className='text-xl font-bold mb-2'>{project.title}</h3>
-                                <p className='text-gray-300 mb-4'>
-                                    {project.shortDescription}
-                                </p>
-                                <div className='flex flex-wrap gap-2'>
-                                    {project.technologies.map((tech, techIndex) => (
-                                        <span key={techIndex} className='bg-gray-800 px-2 py-1 rounded text-sm'>
-                                            {tech}
-                                        </span>
-                                    ))}
+                        <div 
+                            className="project-card"
+                            key={index}
+                            onClick={handleCardClick}
+                        >
+                            <div className="project-card-inner">
+                                <div className="project-card-front">
+                                    <img 
+                                        className='h-full w-full object-cover'
+                                        src={project.image} 
+                                        alt={project.title || "Project screenshot"}
+                                    />
                                 </div>
-                                <div className='flex justify-between items-center mt-4'>
-                                    <a 
-                                        className='button bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors'
-                                        target='_blank' 
-                                        rel="noopener noreferrer"
-                                        href={project.link}
-                                    >
-                                        View Code
-                                    </a>
-                                    <Link
-                                        to={`/projects/${project.id}`}
-                                        className='button bg-green-600 hover:bg-green-700 px-4 py-2 rounded transition-colors'
-                                    >
-                                        View Details
-                                    </Link>
+                                <div className="project-card-back">
+                                    <h3 className='text-xl font-bold mb-2'>{project.title}</h3>
+                                    <p className='text-gray-300 mb-4 flex-grow'>
+                                        {project.shortDescription}
+                                    </p>
+                                    <div className='flex flex-wrap gap-2 mb-4'>
+                                        {project.technologies.map((tech, techIndex) => (
+                                            <span key={techIndex} className='tech-tag'>
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <div className='project-buttons flex flex-col sm:flex-row justify-between gap-2 mt-auto'>
+                                        <a 
+                                            className='project-button view-code-btn'
+                                            target='_blank' 
+                                            rel="noopener noreferrer"
+                                            href={project.link}
+                                        >
+                                            View Code
+                                        </a>
+                                        <Link
+                                            to={`/projects/${project.id}`}
+                                            className='project-button view-details-btn'
+                                        >
+                                            View Details
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
