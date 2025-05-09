@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import WebsiteImg1 from '../assets/ecommerce-websites.jpg';
 import WebsiteImg2 from '../assets/food-ecommerce.jpg';
@@ -6,10 +6,10 @@ import WebsiteImg3 from '../assets/website-blog.jpg';
 
 export default function Projects() {
     const [isTouchDevice, setIsTouchDevice] = useState(false);
-    
-    // Detect touch devices
-    useState(() => {
-        setIsTouchDevice('ontouchstart' in window);
+    const [activeCard, setActiveCard] = useState(null);
+
+    useEffect(() => {
+        setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
     }, []);
 
     const config = {
@@ -41,69 +41,66 @@ export default function Projects() {
         ]
     };
 
-    const handleCardClick = (e) => {
+    const handleCardClick = (index) => {
         if (isTouchDevice) {
-            e.currentTarget.classList.toggle('active');
+            setActiveCard(activeCard === index ? null : index);
         }
     };
 
     return (
-        <section className={`flex flex-col py-20 px-5 justify-center bg-primary text-white ${isTouchDevice ? 'touch' : ''}`} id="projects">
-            <div className="w-full">
-                <div className="flex flex-col px-4 md:px-10 py-5">
-                    <h1 className="text-4xl border-b-4 border-secondary mb-5 w-[150px] font-bold">Projects</h1>
-                    <p>These are some of my best Projects. I have built these with React, Flutter, MERN and more. Check them out.</p>
-                </div>
+        <section className="flex flex-col py-20 px-4 md:px-10 justify-center bg-primary text-white" id="projects">
+            <div className="w-full mb-8">
+                <h1 className="text-4xl border-b-4 border-secondary mb-5 w-[150px] font-bold">Projects</h1>
+                <p>These are some of my best Projects. I have built these with React, Flutter, MERN and more. Check them out.</p>
             </div>
-            <div className="w-full px-4 md:px-10">
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
-                    {config.projects.map((project, index) => (
-                        <div 
-                            className="project-card"
-                            key={index}
-                            onClick={handleCardClick}
-                        >
-                            <div className="project-card-inner">
-                                <div className="project-card-front">
-                                    <img 
-                                        className='h-full w-full object-cover'
-                                        src={project.image} 
-                                        alt={project.title || "Project screenshot"}
-                                    />
-                                </div>
-                                <div className="project-card-back">
-                                    <h3 className='text-xl font-bold mb-2'>{project.title}</h3>
-                                    <p className='text-gray-300 mb-4 flex-grow'>
-                                        {project.shortDescription}
-                                    </p>
-                                    <div className='flex flex-wrap gap-2 mb-4'>
+            
+            <div className="project-container">
+                {config.projects.map((project, index) => (
+                    <div 
+                        className={`project-card ${activeCard === index ? 'active' : ''}`}
+                        key={index}
+                        onClick={() => handleCardClick(index)}
+                    >
+                        <div className="project-card-inner">
+                            <div className="project-card-front">
+                                <img 
+                                    className="h-full w-full object-cover"
+                                    src={project.image} 
+                                    alt={project.title}
+                                />
+                            </div>
+                            <div className="project-card-back">
+                                <h3 className="text-xl font-bold mb-3">{project.title}</h3>
+                                <div className="project-content">
+                                    <p className="text-gray-300 mb-4">{project.shortDescription}</p>
+                                    <div className="flex flex-wrap gap-2 mb-4">
                                         {project.technologies.map((tech, techIndex) => (
-                                            <span key={techIndex} className='tech-tag'>
+                                            <span key={techIndex} className="tech-tag">
                                                 {tech}
                                             </span>
                                         ))}
                                     </div>
-                                    <div className='project-buttons flex flex-col sm:flex-row justify-between gap-2 mt-auto'>
-                                        <a 
-                                            className='project-button view-code-btn'
-                                            target='_blank' 
-                                            rel="noopener noreferrer"
-                                            href={project.link}
-                                        >
-                                            View Code
-                                        </a>
-                                        <Link
-                                            to={`/projects/${project.id}`}
-                                            className='project-button view-details-btn'
-                                        >
-                                            View Details
-                                        </Link>
-                                    </div>
+                                </div>
+                                <div className="project-buttons">
+                                    <a 
+                                        className="project-button view-code-btn"
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        href={project.link}
+                                    >
+                                        View Code
+                                    </a>
+                                    <Link
+                                        to={`/projects/${project.id}`}
+                                        className="project-button view-details-btn"
+                                    >
+                                        View Details
+                                    </Link>
                                 </div>
                             </div>
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
             </div>
         </section>
     );

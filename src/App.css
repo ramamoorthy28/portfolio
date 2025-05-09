@@ -28,26 +28,26 @@ html {
 }
 
 /* Project Card Styles */
+.project-container {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5;
+}
+
 .project-card {
-    @apply relative h-[300px] w-full rounded-lg overflow-hidden;
+    @apply relative h-[350px] w-full rounded-lg overflow-hidden;
     perspective: 1000px;
 }
 
 .project-card-inner {
-    @apply relative w-full h-full;
-    transition: transform 0.6s;
+    @apply relative w-full h-full transition-transform duration-500;
     transform-style: preserve-3d;
 }
 
-.project-card:hover .project-card-inner {
-    transform: rotateY(180deg);
-}
-
+.project-card:hover .project-card-inner,
 .project-card.active .project-card-inner {
     transform: rotateY(180deg);
 }
 
-.project-card-front, 
+.project-card-front,
 .project-card-back {
     @apply absolute inset-0 w-full h-full;
     backface-visibility: hidden;
@@ -58,13 +58,19 @@ html {
 }
 
 .project-card-back {
-    @apply bg-secondary p-5 flex flex-col;
+    @apply bg-secondary p-4 flex flex-col;
     transform: rotateY(180deg);
+}
+
+/* Button Container */
+.project-buttons {
+    @apply flex flex-col sm:flex-row gap-2 mt-auto;
 }
 
 /* Button Styles */
 .project-button {
-    @apply px-4 py-2 rounded transition-colors text-center font-medium;
+    @apply px-3 py-2 rounded text-center text-sm sm:text-base font-medium;
+    min-width: 120px;
 }
 
 .view-code-btn {
@@ -77,26 +83,25 @@ html {
 
 /* Technology Tags */
 .tech-tag {
-    @apply bg-gray-800 px-2 py-1 rounded text-sm;
+    @apply bg-gray-800 px-2 py-1 rounded text-xs sm:text-sm;
+}
+
+/* Content Area */
+.project-content {
+    @apply flex-grow overflow-y-auto;
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .project-card {
-        height: 280px;
+        height: 300px;
     }
     
     .project-buttons {
-        @apply flex flex-col gap-2;
+        @apply flex flex-col;
     }
-}
-
-/* Animation for touch devices */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.touch .project-card-back {
-    animation: fadeIn 0.3s ease-out;
+    
+    .project-button {
+        @apply w-full;
+    }
 }
