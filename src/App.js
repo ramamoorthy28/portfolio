@@ -6,19 +6,36 @@ import Projects from './components/Projects';
 import Resume from './components/Resume';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-
+import WhatsAppButton from './components/WhatsAppButton';
+import HotelBookingApp from './components/HotelBookingApp';
+import FoodDeliveryApp from './components/FoodDeliveryApp';
+import BlogWebsite from './components/BlogWebsite';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-     <Header/>
-     <Hero/>
-     <About/>
-     <Projects/>
-     <Resume/>
-     <Contact/>
-     <Footer/>
-  </div>
+    <BrowserRouter>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Hero />
+              <About />
+              <Projects />
+              <Resume />
+              <Contact />
+              <Footer />
+              <WhatsAppButton />
+            </>
+          } />
+          <Route path="/projects/hotel-booking-app" element={<HotelBookingApp />} />
+          <Route path="/projects/food-delivery-app" element={<FoodDeliveryApp />} />
+          <Route path="/projects/blog-website" element={<BlogWebsite />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
