@@ -11,25 +11,34 @@ import HotelBookingApp from './components/HotelBookingApp';
 import FoodDeliveryApp from './components/FoodDeliveryApp';
 import BlogWebsite from './components/BlogWebsite';
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
         <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <About />
-              <Projects />
-              <Resume />
-              <Contact />
-              <Footer />
-              <WhatsAppButton />
-            </>
-          } />
+          {/* Main Portfolio Page */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Header />
+                <Hero />
+                <About />
+                <Projects />
+                <Resume />
+                <Contact />
+                <Footer />
+                <WhatsAppButton />
+              </>
+            }
+          />
+
+          {/* Redirect /portfolio to main page */}
+          <Route path="/portfolio" element={<Navigate to="/" />} />
+
+          {/* Project-specific Pages */}
           <Route path="/projects/hotel-booking-app" element={<HotelBookingApp />} />
           <Route path="/projects/food-delivery-app" element={<FoodDeliveryApp />} />
           <Route path="/projects/blog-website" element={<BlogWebsite />} />
