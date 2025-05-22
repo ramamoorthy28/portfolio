@@ -4,11 +4,20 @@
     <meta charset="utf-8">
     <title>Redirecting...</title>
     <script>
-      sessionStorage.redirect = location.pathname;
+      // Redirect to index.html preserving the path
+      const segment = 1;
+      const l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + 
+        l.pathname.split('/').slice(0, 1 + segment).join('/') + '/?p=/' + 
+        l.pathname.slice(1).split('/').slice(segment).join('/').replace(/&/g, '~and~') + 
+        (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') + 
+        l.hash
+      );
     </script>
-    <meta http-equiv="refresh" content="0;URL='/'"></meta>
   </head>
   <body>
-    Redirecting...
+    <h1>Redirecting...</h1>
+    <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
   </body>
 </html>
